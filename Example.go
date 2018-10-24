@@ -64,8 +64,10 @@ func NewRouter() *mux.Router {
 
 func TodoIndex(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
+	var todoTemp Todo
+	json.NewDecoder(r.Body).Decode(&todoTemp)
 	var todo Todo
-	todo.ID = "toto"
+	todo.ID = todoTemp.Name
 	response, err := json.MarshalIndent(todo, "", "    ")
 	if err != nil {
 		panic(err)

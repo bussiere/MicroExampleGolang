@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -17,7 +18,10 @@ type Todo struct {
 func main() {
 
 	url := "http://localhost:8080/api/todos"
-	req, err := http.NewRequest("GET", url, nil)
+	var tr Todo
+	tr.Name = "titi"
+	jsonStr, err := json.Marshal(tr)
+	req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonStr))
 	req.Header.Add("Content-Type", "application/json;charset=utf-8")
 	if err != nil {
 		log.Fatal("NewRequest: ", err)
